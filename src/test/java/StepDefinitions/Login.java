@@ -1,5 +1,7 @@
 package StepDefinitions;
 
+import Utils.CommonMethods;
+import Utils.ConfigReader;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -7,24 +9,27 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
 
-public class Login {
+import java.time.Duration;
+import java.util.concurrent.TimeUnit;
 
-    WebDriver driver;
+public class Login extends CommonMethods {
+
 
     @Given("open the browser and launch HRMS application")
     public void open_the_browser_and_launch_hrms_application() {
-        driver = new ChromeDriver();
-        driver.get("http://hrm.syntaxtechs.net/humanresources/symfony/web/index.php/auth/login");
-        driver.manage().window().maximize();
+        openBrowserAndLaunchApplication();
     }
 
     @When("user enter valid email and valid password")
     public void user_enter_valid_email_and_valid_password() {
         WebElement username = driver.findElement(By.id("txtUsername"));
-        username.sendKeys("Admin");
+        username.sendKeys(ConfigReader.getPropertyValue("username"));
         WebElement password = driver.findElement(By.id("txtPassword"));
-        password.sendKeys("Hum@nhrm123");
+        password.sendKeys(ConfigReader.getPropertyValue("password"));
     }
 
     @When("click on login button")
@@ -38,5 +43,11 @@ public class Login {
         if (userLogged) {
             System.out.println("User logged in successfully.");
         }
+
+    }
+
+    @Then("close the browser")
+    public void close_the_browser() {
+        closeBrowser();
     }
 }

@@ -1,0 +1,9 @@
+3 Important Components of Cucumber;
+    1) Feature File - We use Gherkin language in this file and write hte scenario.
+    2) Step Definition - We write the code in this file.
+    3) Test Runner - We execute the code.
+
+    When we make any change in Features file, we need to change in Step Definitions file as well.
+
+dryRun = true;
+    It indicates that the operation will not have any real effect or impact on the system or environment, but will instead provide a preview so we can our missing codes there.
