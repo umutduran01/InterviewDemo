@@ -7,3 +7,10 @@
 
 dryRun = true;
     It indicates that the operation will not have any real effect or impact on the system or environment, but will instead provide a preview so we can our missing codes there.
+
+Commenting in feature file;
+    We can use # to comment in feature file.
+
+Tagging in Cucumber;
+    When we want to tag some specific tests, we can add an annotation before scenario such as @smoke. To run this case, in TestRunner we add a new parameter such as tags = "@smoke".
+    We can also execute multiple tags by using "or" : tags = "@test1 or @test2"

@@ -1,4 +1,6 @@
 Feature: Login Functionalities
+
+  @smoke
   Scenario: Valid Admin Login
     Given open the browser and launch HRMS application
     When user enter valid email and valid password
