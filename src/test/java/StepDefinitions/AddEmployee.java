@@ -24,11 +24,11 @@ public class AddEmployee extends CommonMethods {
     @When("user enters first name, middle name and last name")
     public void user_enters_first_name_middle_name_and_last_name() {
         WebElement firstName = driver.findElement(By.id("firstName"));
-        sendKeys(firstName, "firstname");
+        sendText(firstName, "firstname");
         WebElement middleName = driver.findElement(By.id("middleName"));
-        sendKeys(middleName, "middlename");
+        sendText(middleName, "middlename");
         WebElement lastName = driver.findElement(By.id("lastName"));
-        sendKeys(lastName, "lastname");
+        sendText(lastName, "lastname");
     }
 
     @Then("user clicks on save button")

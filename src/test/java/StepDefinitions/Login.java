@@ -11,17 +11,17 @@ import org.openqa.selenium.WebElement;
 public class Login extends CommonMethods {
 
 
-    @Given("open the browser and launch HRMS application")
-    public void open_the_browser_and_launch_hrms_application() {
-        openBrowserAndLaunchApplication();
-    }
+//    @Given("open the browser and launch HRMS application")
+//    public void open_the_browser_and_launch_hrms_application() {
+//        openBrowserAndLaunchApplication();
+//    }
 
     @When("user enter valid email and valid password")
     public void user_enter_valid_email_and_valid_password() {
         WebElement username = driver.findElement(By.id("txtUsername"));
-        username.sendKeys(ConfigReader.getPropertyValue("username"));
+        sendText(username, "username");
         WebElement password = driver.findElement(By.id("txtPassword"));
-        password.sendKeys(ConfigReader.getPropertyValue("password"));
+        sendText(password, "password");
     }
 
     @When("click on login button")
@@ -38,8 +38,16 @@ public class Login extends CommonMethods {
 
     }
 
-    @Then("close the browser")
-    public void close_the_browser() {
-        closeBrowser();
+//    @Then("close the browser")
+//    public void close_the_browser() {
+//        closeBrowser();
+//    }
+
+    @When("user enter valid {string} and valid {string}")
+    public void user_enter_valid_and_valid(String username1, String password1) {
+        WebElement username = driver.findElement(By.id("txtUsername"));
+        username.sendKeys(username1);
+        WebElement password = driver.findElement(By.id("txtPassword"));
+        password.sendKeys(password1);
     }
 }

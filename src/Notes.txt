@@ -14,3 +14,40 @@ Commenting in feature file;
 Tagging in Cucumber;
     When we want to tag some specific tests, we can add an annotation before scenario such as @smoke. To run this case, in TestRunner we add a new parameter such as tags = "@smoke".
     We can also execute multiple tags by using "or" : tags = "@test1 or @test2"
+    To execute cases with more tags, use "and" between instead of "or".
+
+plugin = {"pretty"}
+    It is a parameter that we use in test class to make console more readable.
+
+Hooks:
+    For defining pre and post steps in any Cucumber framework.
+    This is always created in StepDefinition folder.
+    This class cannot be inherited.
+
+    !! While creating Hooks, you should see "import io.cucumber.java.Before;".
+
+    If there is a Hooks class in the framework, it will always be executed.
+
+    If we want to perform another action beside Hooks methods, we should tag the case and create a new Hooks methods and also tag as @Before(value = "@tag")
+
+Background:
+    If there are common steps in the same feature file, we can add those steps to background so we do not need to repeat.
+    Those steps will execute till the flow is broken.
+
+"Regular Expression":
+    While writing features, we can add parameter as "string" so it will be pushed to StepDefinitions.
+
+Scenario Outline:
+    This is another way of passing value in Cucumber. We can achieve parametrization and data driven with this way.
+    Parametrization is testing the same function with different values such as different username and password.
+    Data driven is fetching the values from an external source such as Excel.
+
+------------------------------------------------------------------------------------------------------------------------
+WAY OF PASSING VALUE
+1) Hard Code
+2) Property File
+3) Regular Expression
+4) Scenario Outline
+------------------------------------------------------------------------------------------------------------------------
+
+
