@@ -11,7 +11,7 @@ public class SearchEmployee extends CommonMethods {
     @When("user enters valid employee id")
     public void user_enters_valid_employee_id() {
         WebElement enterId = driver.findElement(By.id("empsearch_id"));
-        enterId.sendKeys(ConfigReader.getPropertyValue("empid"));
+        sendText(enterId,"empid");
     }
 
     @When("click on search button")

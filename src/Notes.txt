@@ -39,6 +39,8 @@ Background:
 
 Scenario Outline:
     This is another way of passing value in Cucumber. We can achieve parametrization and data driven with this way.
+    This method provides us a different way of data driven testing.
+    It is always used with the keyword 'Examples'
     Parametrization is testing the same function with different values such as different username and password.
     Data driven is fetching the values from an external source such as Excel.
 
@@ -48,6 +50,10 @@ WAY OF PASSING VALUE
 2) Property File
 3) Regular Expression
 4) Scenario Outline
+5) Data Table
 ------------------------------------------------------------------------------------------------------------------------
 
+Data Table:
+    The biggest difference between Scenario Outline and Data Table is that, when we use Data Table, the browser starts only once and passes all values. That's why
+    it is a good practice to logout when it logins first.
 
