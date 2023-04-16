@@ -15,8 +15,6 @@ import java.util.Map;
 
 public class Login extends CommonMethods {
 
-    LoginPage login = new LoginPage();
-
     @When("user enter valid email and valid password")
     public void user_enter_valid_email_and_valid_password() {
         sendText(login.usernameTextBox, "username");
@@ -36,11 +34,6 @@ public class Login extends CommonMethods {
         }
 
     }
-
-//    @Then("close the browser")
-//    public void close_the_browser() {
-//        closeBrowser();
-//    }
 
     @When("user enter valid {string} and valid {string}")
     public void user_enter_valid_and_valid(String username1, String password1) {

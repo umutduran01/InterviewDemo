@@ -4,7 +4,8 @@ Feature: Searching Employee
     When user enter valid email and valid password
     And click on login button
     When user clicks on PIM option
-@test1
+
+  @test1
   Scenario: Searching by ID
 #    Given open the browser and launch HRMS application
 #    When user enter valid email and valid password
