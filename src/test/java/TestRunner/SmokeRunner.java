@@ -9,7 +9,7 @@ import org.junit.runner.RunWith;
         glue = "StepDefinitions",
         dryRun = false,
         tags = "@newTest",
-        plugin = {"pretty", "html:target/Cucumber.html", "json:target/Cucumber.json"})
+        plugin = {"pretty", "html:target/Cucumber.html", "json:target/Cucumber.json", "rerun:target/failed.txt"})
 
 public class SmokeRunner {
 }
