@@ -23,7 +23,7 @@ public class LoginPage extends CommonMethods {
     @FindBy(id = "btnLogin")
     public WebElement loginButton;
 
-    @FindBy(id = "welcomeIcon")
+    @FindBy(id = "welcome")
     public WebElement welcomeIcon;
 
     @FindBy(xpath = "//a[text()='Logout']")

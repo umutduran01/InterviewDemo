@@ -2,6 +2,7 @@ package Utils;
 
 import StepDefinitions.PageInitializer;
 import org.apache.commons.io.FileUtils;
+import org.apache.log4j.xml.DOMConfigurator;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -46,9 +47,18 @@ public class CommonMethods extends PageInitializer {
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofMillis(Constants.WAIT_TIME));
         initializePageObjects();
+
+        //To configure the File and pattern it has
+
+        DOMConfigurator.configure("log4j.xml");
+        Log.startTestCase("This is the beginning of my test case.");
+        Log.info("My test case is executing.");
+        Log.warning("My test case might have some important issues.");
     }
 
     public static void closeBrowser() {
+        Log.info("This test case is about to get completed.");
+        Log.endTestCase("This test case has finished.");
         driver.close();
     }
 
