@@ -124,3 +124,22 @@ MAVEN LIFECYCLE:
         7) install: installs the packages into local repos. ".m2" file keeps all dependencies
         8) site: generates documentation for the project
         9) deploy: copies the final package to remote repo for sharing with other devs
+
+------------------------------------------------------------------------------------------------------------------------
+                                                     -JDBC NOTES-
+CREATING CONNECTION WITH DATABASE:
+    We used MySQLConnector dependency.
+
+    We need 3 things to work with a DB:
+        1)Address of DB - url
+        2)Name of DB
+        3)Username, password
+
+    - Connection class is used to establish a connection with DB.
+    - Make a statement that allows you to send query to the DB.
+    - Use ResultSet to store the result in its object.
+
+        -rset.next() - to shift the cursor to the next line.
+        -ResultSetMetaData - it contains info about the result such as how many columns, rows are there, name of colums/rows etc.
+
+    When we DB code with framework, we will pass url, username nad password in config.prop file.
