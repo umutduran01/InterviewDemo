@@ -143,3 +143,11 @@ CREATING CONNECTION WITH DATABASE:
         -ResultSetMetaData - it contains info about the result such as how many columns, rows are there, name of colums/rows etc.
 
     When we DB code with framework, we will pass url, username nad password in config.prop file.
+
+In order to integrate DB in framework, we created DBUtility class.
+We have added a scenario in AddEmployee feature file.
+We have added steps in add employee steps page.
+We have added tag of the scenario in runner class.
+
+Scenario is to capture the employee id from UI and verify it with DB. For this, we have added scenario in Feature file and added in Step Definitions.
+Then we are verifying firstname, middlename, lastname etc one by one because we cannot compare bunch of values in one attempt.

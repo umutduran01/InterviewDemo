@@ -18,11 +18,10 @@ public class DatabaseTest2 {
             //ResultSet resultSet = statement.executeQuery("select FirstName, LastName from person");
             ResultSet resultSet = statement.executeQuery("select firstname, lastname, age, city from person where city is not null;");
 
-
             //ResultSetMetaData has object that contains info about the result such as in the table how many columns are there, name of the columns, rows and number of the rows.
             ResultSetMetaData metaData = resultSet.getMetaData();
 
-            //print all column header valuer
+            //print all column header value
             for (int i = 1; i <= metaData.getColumnCount(); i++) {
                 String columnName = metaData.getColumnName(i);
                 System.out.println(columnName);
