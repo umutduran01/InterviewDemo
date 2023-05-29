@@ -14,6 +14,12 @@ import static org.hamcrest.Matchers.equalTo;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //We can use this when the order of the methods is important.
 public class HardCodedExamples {
 
+    //In Postman we do not add anything to baseURL but here we add http:// to create a connection.
+
+    String baseURI = RestAssured.baseURI = "http://hrm.syntaxtechs.net/syntaxapi/api";
+    String token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODUyNzc5MzQsImlzcyI6ImxvY2FsaG9zdCIsImV4cCI6MTY4NTMyMTEzNCwidXNlcklkIjoiNTQ5OSJ9.LwrIVeHAl-rkYHvAZbKBKa6s4jjnPY_rV1O_-vORWCQ";
+    static String employee_id;
+
     @Test
     public void bGetCreatedEmployee() {
         RequestSpecification prepareRequest = given().header("Content-Type", "application/json").header("Authorization", token).queryParam("employee_id", employee_id);
@@ -34,13 +40,6 @@ public class HardCodedExamples {
 
         System.out.println("This case has passed.");
     }
-
-
-    //In Postman we do not add anything to baseURL but here we add http:// to create a connection.
-
-    String baseURI = RestAssured.baseURI = "http://hrm.syntaxtechs.net/syntaxapi/api";
-    String token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODUyNzc5MzQsImlzcyI6ImxvY2FsaG9zdCIsImV4cCI6MTY4NTMyMTEzNCwidXNlcklkIjoiNTQ5OSJ9.LwrIVeHAl-rkYHvAZbKBKa6s4jjnPY_rV1O_-vORWCQ";
-    static String employee_id;
 
     @Test
     public void aCreateEmployee() {
