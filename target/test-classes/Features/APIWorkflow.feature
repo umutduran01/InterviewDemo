@@ -28,3 +28,17 @@ Feature: API workflow for HRMS
     Then the retrieved data at "employee" object matches with the data of created employee
       | emp_firstname | emp_lastname | emp_middle_name | emp_gender | emp_birthday | emp_status | emp_job_title |
       | nelena        | faria        | ms              | Female     | 2012-05-20   | Confirmed  | Engineer      |
+
+  @dynamic
+  Scenario: create an employee using API call
+    Given a request is prepared to create an employee with dynamic data "nelena" , "faria" , "ms" , "F" , "2012-05-20" , "Confirmed" , "Engineer"
+    When a POST call is made to create an employee
+    Then the status code for creating an employee is 201
+    Then the employee contains key "Message" and value "Employee Created"
+    Then employee id "Employee.employee_id" is stored as a global variable to be used for other calls
+
+  @update
+  Scenario: updating the employee with API call
+    Given a request is prepared to update an employee
+    When a PUT call is done to update the employee
+    Then status code of updating employee is 200

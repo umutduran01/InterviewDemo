@@ -1,5 +1,6 @@
 package APIStepDefinitions;
 
+import TestRunner.APIRunner;
 import Utils.APIConstanst;
 import Utils.APIPayloadConstants;
 import io.cucumber.java.en.Given;
@@ -105,6 +106,34 @@ public class APIWorkflowSteps {
                 Assert.assertEquals(expectedValue, actualValue);
             }
         }
+    }
+
+    //--------------------------------------------
+    //dynamic
+
+    @Given("a request is prepared to create an employee with dynamic data {string} , {string} , {string} , {string} , {string} , {string} , {string}")
+    public void a_request_is_prepared_to_create_an_employee_with_dynamic_data(String fn, String ln, String md, String gender, String bday, String status, String jobTitle) {
+        request = given().header(APIConstanst.HEADER_KEY_CONTENT_TYPE, APIConstanst.HEADER_VALUE_CONTENT_TYPE).header(APIConstanst.HEADER_KEY_AUTHORIZATION,
+                GenerateToken.token).body(APIPayloadConstants.createEmployeePayloadDynamic(fn, ln, md, gender, bday, status, jobTitle));
+    }
+
+    //-------------------------------------------
+    //update
+
+    @Given("a request is prepared to update an employee")
+    public void a_request_is_prepared_to_update_an_employee() {
+        request = given().header(APIConstanst.HEADER_KEY_CONTENT_TYPE, APIConstanst.HEADER_VALUE_CONTENT_TYPE).header(APIConstanst.HEADER_KEY_AUTHORIZATION, GenerateToken.token).
+                body(APIPayloadConstants.updateEmployeePayloadJson());
+    }
+
+    @When("a PUT call is done to update the employee")
+    public void a_put_call_is_done_to_update_the_employee() {
+        response = request.when().put(APIConstanst.UPDATE_EMPLOYEE_URI);
+    }
+
+    @Then("status code of updating employee is {int}")
+    public void status_code_of_updating_employee_is(Integer int1) {
+        response.then().assertThat().statusCode(int1);
     }
 
 
