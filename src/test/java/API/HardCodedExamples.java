@@ -5,127 +5,134 @@ import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.junit.Assert;
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.*;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) //We can use this when the order of the methods is important.
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class HardCodedExamples {
 
-    //In Postman we do not add anything to baseURL but here we add http:// to create a connection.
-
     String baseURI = RestAssured.baseURI = "http://hrm.syntaxtechs.net/syntaxapi/api";
-    String token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODUyNzc5MzQsImlzcyI6ImxvY2FsaG9zdCIsImV4cCI6MTY4NTMyMTEzNCwidXNlcklkIjoiNTQ5OSJ9.LwrIVeHAl-rkYHvAZbKBKa6s4jjnPY_rV1O_-vORWCQ";
-    static String employee_id;
+    String token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2OTE0MzIyOTgsImlzcyI6ImxvY2FsaG9zdCIsImV4cCI6MTY5MTQ3NTQ5OCwidXNlcklkIjoiNTg1NiJ9.QOdLf1QzT1CaTCEUFvcyxKcfk2d0CGyDpK6M3bSLqW0";
 
-    @Test
-    public void bGetCreatedEmployee() {
-        RequestSpecification prepareRequest = given().header("Content-Type", "application/json").header("Authorization", token).queryParam("employee_id", employee_id);
+    static String employeeID;
 
-        //hitting the endpoint
-        Response response = prepareRequest.when().get("/getOneEmployee.php");
 
-        //print the output
-        response.prettyPrint();
+    //==================================================================================================================
 
-        //verify the response
-        response.then().assertThat().statusCode(200);
-
-        String temporaryEmpID = response.jsonPath().getString("employee.employee_id");
-
-        //We have 2 emp ID, one is global and second is local
-        Assert.assertEquals(employee_id, temporaryEmpID);
-
-        System.out.println("This case has passed.");
-    }
-
-    @Test
+    @Test //every method is considered as a test, so we use JUnit annotations
     public void aCreateEmployee() {
+
         //prepare the request
-        RequestSpecification preparedRequest = given().header("Content-Type", "application/json").header("Authorization", token).body("{\n" +
-                "    \"emp_firstname\": \"umut\",\n" +
-                "    \"emp_lastname\": \"faria\",\n" +
-                "    \"emp_middle_name\": \"ms\",\n" +
-                "    \"emp_gender\": \"F\",\n" +
-                "    \"emp_birthday\": \"1995-05-24\",\n" +
-                "    \"emp_status\": \"Confirmed\",\n" +
-                "    \"emp_job_title\": \"Engineer\"\n" +
-                "}");
+        RequestSpecification request = given().
+                header("Content-Type", "application/json").
+                header("Authorization", token).
+                body("{\n" +
+                        "  \"emp_firstname\": \"M47\",\n" +
+                        "  \"emp_lastname\": \"Labs\",\n" +
+                        "  \"emp_middle_name\": \"Barcelona\",\n" +
+                        "  \"emp_gender\": \"M\",\n" +
+                        "  \"emp_birthday\": \"2001-01-01\",\n" +
+                        "  \"emp_status\": \"Pending\",\n" +
+                        "  \"emp_job_title\": \"API Tester\"\n" +
+                        "}");
 
+        //hitting the endpoint / sending the request, and it will return a response
+        Response response = request.when().post("/createEmployee.php");
 
-        //hitting the endpoint
-        Response response = preparedRequest.when().post("/createEmployee.php");
-
-        //it will print the output
+        //print the output on console
         response.prettyPrint();
 
         //verifying the assertions
         response.then().assertThat().statusCode(201);
-
-        //we capture emp ID from the response
-        employee_id = response.jsonPath().getString("Employee.employee_id");
-
-        //we are verifying the firstname in the response body
-        response.then().assertThat().body("Employee.emp_firstname", equalTo("umut"));
-        response.then().assertThat().body("Employee.emp_lastname", equalTo("faria"));
+        response.then().assertThat().body("Employee.emp_firstname", equalTo("M47"));
         response.then().assertThat().header("Content-Type", "application/json");
 
-        //if assertions fail, we'll not see the message
-        System.out.println("My test case passed.");
+        //extract employee_id
+        employeeID = response.jsonPath().getString("Employee.employee_id");
 
+        //console message
+        System.out.println("My test case has passed.");
     }
 
+    //==================================================================================================================
+
+    @Test
+    public void bGetCreatedEmployee() {
+
+        //prepare the request
+        RequestSpecification request = given().header("Content-Type", "application/json").header("Authorization", token).queryParam("employee_id", employeeID);
+
+        //send the request and receive a response
+        Response response = request.when().get("/getOneEmployee.php");
+
+        //verify assertions
+        response.then().assertThat().statusCode(200);
+
+        String responseEmployeeID = response.jsonPath().getString("employee.employee_id"); //I extract the employee ID in getCreatedEmployee and assert with createEmployee's.
+        Assert.assertEquals(employeeID, responseEmployeeID); //JUnit's assertions to compare two Strings.
+
+        //print the response
+        response.prettyPrint();
+    }
+
+    //==================================================================================================================
 
     @Test
     public void cUpdateEmployee() {
-        RequestSpecification preparedRequest = given().header("Content-Type", "application/json").header("Authorization", token).body("{\n" +
-                "    \"employee_id\": \"" + employee_id + "\",\n" +
-                "    \"emp_firstname\": \"umut\",\n" +
-                "    \"emp_lastname\": \"duran\",\n" +
-                "    \"emp_middle_name\": \"m\",\n" +
-                "    \"emp_gender\": \"M\",\n" +
-                "    \"emp_birthday\": \"1995-05-24\",\n" +
-                "    \"emp_status\": \"Confirmed\",\n" +
-                "    \"emp_job_title\": \"QA Tester\"\n" +
+
+        RequestSpecification request = given().header("Content-Type", "application/json").header("Authorization", token).body("{\n" +
+                "  \"employee_id\": \"" + employeeID + "\",\n" +
+                "  \"emp_firstname\": \"M47\",\n" +
+                "  \"emp_lastname\": \"Labs\",\n" +
+                "  \"emp_middle_name\": \"Madrid\",\n" +
+                "  \"emp_gender\": \"F\",\n" +
+                "  \"emp_birthday\": \"2002-02-02\",\n" +
+                "  \"emp_status\": \"Tester\",\n" +
+                "  \"emp_job_title\": \"Automation Tester\"\n" +
                 "}");
 
-        //When we want to put employee ID that is not hard coded, remove the employee ID - put "" - put ++ - put your variable between two +.
+        //To be able to pace employeeID in the body, add "+variable+".
 
-        Response response = preparedRequest.when().put("/updateEmployee.php");
+        //send the request
+        Response response = request.when().put("/updateEmployee.php");
 
         response.prettyPrint();
 
+        //assertions
         response.then().assertThat().statusCode(200);
-        response.then().assertThat().body("Message", equalTo("Employee record Updated"));
-
-        System.out.println("Employee is updated.");
+        response.then().assertThat().body("Message",equalTo("Employee record Updated"));
     }
 
-    @Test
-    public void dGetUpdatedEmployee() {
-        RequestSpecification preparedRequest = given().header("Content-Type", "application/json").header("Authorization", token).queryParam("employee_id", employee_id);
-        Response response = preparedRequest.when().get("/getOneEmployee.php");
-        response.prettyPrint();
-        response.then().assertThat().statusCode(200);
+    //==================================================================================================================
 
-        //if we want to verify the body of the response, we can do that using hamcrest matchers
+    @Test
+    public void dGetUpdatedEmployee(){
+        //prepare the request
+        RequestSpecification request = given().header("Content-Type", "application/json").header("Authorization", token).queryParam("employee_id", employeeID);
+
+        //send the request and receive a response
+        Response response = request.when().get("/getOneEmployee.php");
+
+        response.prettyPrint();
+
+        //verify assertions
+        response.then().assertThat().statusCode(200);
+        response.then().assertThat().body("employee.emp_job_title",equalTo("Automation Tester"));
+    }
+
+    //==================================================================================================================
+
+    @Ignore
+    @Test
+    public void eGetAllEmployees() {
+        RequestSpecification request = given().header("Content-Type", "application/json").header("Authorization", token);
+        Response response = request.when().get("/getAllEmployees.php");
+        response.then().assertThat().statusCode(200);
+        response.prettyPrint();
     }
 }
 
-/*
-   @Test
-    public void getEmployeeStatus() {
-        RequestSpecification preparedRequest = given().header("Content-Type", "application/json").header("Authorization", token);
-        Response response = preparedRequest.when().get("/employeementStatus.php");
-        response.prettyPrint();
-    }
-
-    @Test
-    public void getJobTitle() {
-        RequestSpecification preparedRequest = given().header("Content-Type", "application/json").header("Authorization", token);
-        Response response = preparedRequest.when().get("/jobTitle.php");
-        response.prettyPrint();
-    }
- */

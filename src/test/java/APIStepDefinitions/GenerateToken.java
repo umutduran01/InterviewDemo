@@ -15,7 +15,7 @@ public class GenerateToken {
     @Given("a JWT is generated")
     public void a_jwt_is_generated() {
         RequestSpecification generateTokenRequest = given().header("Content-Type", "application/json").body("{\n" +
-                "    \"email\": \"umutduran.95@hotmail.com\",\n" +
+                "    \"email\": \"m47labsbarcelona@gmail.com\",\n" +
                 "    \"password\": \"123456\"\n" +
                 "}");
 

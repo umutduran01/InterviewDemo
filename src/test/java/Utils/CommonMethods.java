@@ -74,6 +74,11 @@ public class CommonMethods extends PageInitializer {
     }
 
     public static void sendText(WebElement element, String value) {
+        element.clear();
+        element.sendKeys(value);
+    }
+
+    public static void sendTextFromConfig(WebElement element, String value) {
         element.sendKeys(ConfigReader.getPropertyValue(value));
     }
 
